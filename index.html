@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WhatsApp Automation Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;800&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="wrap top">
+  <h1>📲 ChatFlow <span>WhatsApp automation demo</span></h1>
+  <p>Use the phone on the left as the customer. Trigger automations on the right and watch the messages arrive.</p>
+</header>
+
+<main class="wrap layout">
+  <aside class="phone" aria-label="Customer phone">
+    <div class="phead"><div class="av">S</div><div><b>ShopEase</b><small id="status">online</small></div></div>
+    <div id="chat" class="chat" aria-live="polite"></div>
+    <div class="chips" id="chips"></div>
+    <form id="msgForm" class="pin">
+      <input id="msgIn" placeholder="Type a message as the customer" autocomplete="off" aria-label="Message">
+      <button class="send" aria-label="Send">➤</button>
+    </form>
+  </aside>
+
+  <section class="panel">
+    <div class="tabs" role="tablist">
+      <button role="tab" data-tab="reply" aria-selected="true">Auto-reply</button>
+      <button role="tab" data-tab="orders" aria-selected="false">Orders</button>
+      <button role="tab" data-tab="bcast" aria-selected="false">Broadcast</button>
+      <button role="tab" data-tab="cart" aria-selected="false">Cart recovery</button>
+      <button role="tab" data-tab="wishes" aria-selected="false">Birthdays</button>
+    </div>
+
+    <div class="tp" id="tab-reply">
+      <label class="sw"><input type="checkbox" id="arOn" checked> Instant auto-reply is on</label>
+      <p class="hint">When a customer's message contains a keyword, the matching reply is sent instantly.</p>
+      <div id="rules"></div>
+      <h3>Add a rule</h3>
+      <div class="f2"><input id="rKey" placeholder="Keywords, comma separated" aria-label="Keywords"><input id="rTxt" placeholder="Reply text" aria-label="Reply text"></div>
+      <button class="btn" id="rAdd">Add rule</button>
+    </div>
+
+    <div class="tp" id="tab-orders" hidden>
+      <p class="hint">Place an order to send a confirmation. Then send shipping updates step by step.</p>
+      <div class="f2"><select id="oCust" aria-label="Customer"></select><select id="oItem" aria-label="Product"></select></div>
+      <button class="btn" id="oAdd">Place order</button>
+      <div id="orders"></div>
+    </div>
+
+    <div class="tp" id="tab-bcast" hidden>
+      <p class="hint">Send one message to a customer segment. Use {name} to personalise. Customers without opt-in are skipped.</p>
+      <select id="bSeg" aria-label="Segment"><option>All</option><option>VIP</option><option>New</option><option>Regular</option></select>
+      <textarea id="bTxt" rows="3" aria-label="Broadcast message">Hi {name}, our festive sale is live! Get 20% off with code FEST20 until Sunday.</textarea>
+      <p class="hint" id="bPrev"></p>
+      <button class="btn" id="bSend">Send broadcast</button>
+      <div id="custs"></div>
+    </div>
+
+    <div class="tp" id="tab-cart" hidden>
+      <p class="hint">Add items, then leave without buying. In this demo 6 seconds stands for 1 hour and 14 seconds for 24 hours.</p>
+      <div class="f2"><select id="cItem" aria-label="Product"></select><button class="btn" id="cAdd">Add to cart</button></div>
+      <div id="cartList" class="box"></div>
+      <div class="acts"><button class="btn" id="cLeave">Leave without buying</button><button class="btn alt" id="cBuy">Checkout</button></div>
+      <p class="hint" id="cStat"></p>
+    </div>
+
+    <div class="tp" id="tab-wishes" hidden>
+      <p class="hint">The daily check finds birthdays and anniversaries that fall today and sends a wish.</p>
+      <label>Birthday message<textarea id="tB" rows="2">Happy birthday, {name}! 🎂 Here is a gift: use code BDAY15 for 15% off today.</textarea></label>
+      <label>Anniversary message<textarea id="tA" rows="2">Happy anniversary, {name}! 🎉 Thank you for being with us. Enjoy free shipping this week.</textarea></label>
+      <button class="btn" id="wRun">Run daily check</button>
+      <div id="wList"></div>
+    </div>
+  </section>
+</main>
+
+<section class="wrap logs">
+  <div class="lh"><h2>Message log <small id="lCount"></small></h2><button class="btn alt sm" id="lClr">Clear</button></div>
+  <div id="log"></div>
+</section>
+<script src="script.js"></script>
+</body>
+</html>
